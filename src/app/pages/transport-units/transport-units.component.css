@@ -1,0 +1,7 @@
+table {
+  width: 100%;
+}
+.mat-mdc-chip {
+  min-width: 120px;
+  justify-content: center;
+}

@@ -1,12 +1,14 @@
+// src/app/app.component.ts
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router'; // Asegúrate que RouterModule está importado
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [RouterModule], // La única importación necesaria es RouterModule
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
-export class App {
-  protected title = 'erp-frontend-ecologia';
+export class AppComponent {
+  title = 'erp-frontend-ecologia';
 }
