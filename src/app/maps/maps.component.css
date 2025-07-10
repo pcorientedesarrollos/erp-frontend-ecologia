@@ -1,15 +1,8 @@
-/*
-  ¡ESTILO CRÍTICO!
-  El contenedor del mapa DEBE tener una altura definida.
-  Si no, su altura será 0 y no se verá nada.
-*/
 .map-container {
-  /* Usamos vh (viewport height) para que sea un % de la altura de la pantalla.
-     También puedes usar un valor fijo como 600px. */
   height: 70vh;
   width: 100%;
   border-radius: 12px;
-  overflow: hidden; /* Asegura que el mapa respete los bordes redondeados */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Sombra para darle profundidad */
-  border: 1px solid #e0e0e0; /* Un borde sutil */
+  overflow: hidden;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  border: 1px solid #e0e0e0;
 }
