@@ -11,10 +11,12 @@
   width: 250px;
 
   /* Añade una línea divisoria a la derecha para separarlo visualmente del contenido */
-  border-right: 1px solid rgba(0, 0, 0, 0.12);
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
 
   /* Un fondo sutil para el sidenav */
-  background-color: #fcfcfc;
+  background-color: #424242;
+  overflow-x: hidden; /* Oculta la barra de scroll horizontal SIEMPRE */
+  overflow-y: auto; /*muestra solo si es neecesario */
 }
 
 /* El componente mat-toolbar para la barra de navegación superior */
@@ -41,4 +43,7 @@ mat-toolbar button {
 /* Estilos para el título en la barra superior */
 mat-toolbar span {
   flex: 1 1 auto; /* Permite que el título ocupe el espacio disponible */
+}
+.toolbar-spacer {
+  flex: 1 1 auto;
 }

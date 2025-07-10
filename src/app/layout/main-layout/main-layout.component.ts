@@ -6,6 +6,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 // Importamos nuestro componente Sidenav
 import { SidenavComponent } from '../../shared/components/sidenav/sidenav.component';
@@ -20,10 +21,21 @@ import { SidenavComponent } from '../../shared/components/sidenav/sidenav.compon
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
+    MatSlideToggleModule,
   ],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.css',
 })
 export class MainLayoutComponent {
-  // Puedes añadir lógica aquí si es necesario, como obtener datos del usuario logueado.
+  public isDarkMode = false;
+
+  toggleTheme(event: any) {
+    this.isDarkMode = event.checked;
+    const body = document.body;
+    if (this.isDarkMode) {
+      body.classList.add('dark-mode');
+    } else {
+      body.classList.remove('dark-mode');
+    }
+  }
 }

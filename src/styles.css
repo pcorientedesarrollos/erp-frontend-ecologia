@@ -1,11 +1,54 @@
-/* You can add global styles to this file, and also import other style files */
 /* src/styles.css */
-/* You can add global styles to this file, and also import other style files */
+
+/*
+ * =================================================================================
+ * TEMA OSCURO PRINCIPAL PARA ERP ECOLOGIA
+ * =================================================================================
+*/
+
+/* 1. ESTILOS GLOBALES DE LA APLICACIÓN */
 html,
 body {
   height: 100%;
-}
-body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+
+  /* Establecemos el fondo oscuro para toda la aplicación */
+  background-color: #303030; /* Un gris oscuro, no negro puro */
+  color: #ffffff; /* Texto blanco por defecto */
+}
+
+/* 2. DEFINICIÓN DE LA PALETA DE COLORES */
+:root {
+  /* --- PALETA PRIMARIA (Verde) --- */
+  --mat-primary-500: #4caf50;
+  --mat-primary-700: #388e3c;
+
+  /* --- PALETA DE ACENTO (Amarillo) --- */
+  --mat-accent-500: #ffeb3b;
+
+  /* Colores para las tarjetas del dashboard */
+  --dashboard-color-1: #2196f3; /* Azul */
+  --dashboard-color-2: #ff9800; /* Naranja */
+  --dashboard-color-3: #f44336; /* Rojo */
+  --dashboard-color-4: #9c27b0; /* Púrpura */
+}
+
+/* 3. AJUSTES ESPECÍFICOS PARA COMPONENTES DE MATERIAL EN TEMA OSCURO */
+
+/* Barra de herramientas superior (Toolbar) */
+.mat-toolbar.mat-primary {
+  background-color: var(--mat-primary-700); /* Verde oscuro */
+}
+
+.mat-toolbar.mat-primary span {
+  color: var(--mat-accent-500); /* Amarillo */
+  font-weight: bold;
+}
+
+/* Tarjetas y superficies elevadas */
+mat-card,
+.mat-mdc-card {
+  background-color: #424242; /* Un gris un poco más claro que el fondo */
+  color: #ffffff;
 }
