@@ -1,15 +1,22 @@
 <div class="map-container">
   <google-map height="100%" width="100%" [options]="mapOptions" [center]="center" [zoom]="zoom">
     
-    <!-- CORRECCIÓN: Usamos ng-container para iterar sobre las rutas -->
-    <ng-container *ngFor="let route of routes">
+    <!-- Dibuja las rutas (trayectos) con @for -->
+    @for (route of routes; track route) {
       <map-polyline [path]="route.path" [options]="route.options"></map-polyline>
-    </ng-container>
+    }
 
-    <!-- CORRECCIÓN: Usamos ng-container para iterar sobre los marcadores -->
-    <ng-container *ngFor="let marker of markers">
-      <map-marker [position]="marker.position" [options]="marker.options"></map-marker>
-    </ng-container>
+    <!-- Dibuja los marcadores (íconos) con @for -->
+    @for (marker of markers; track marker.position) {
+      <!-- 
+        Solución al error de TypeScript: 
+        Si 'marker.options' es undefined, se pasa un objeto vacío.
+      -->
+      <map-marker 
+        [position]="marker.position" 
+        [options]="marker.options ?? {}"
+      ></map-marker>
+    }
 
   </google-map>
 </div>

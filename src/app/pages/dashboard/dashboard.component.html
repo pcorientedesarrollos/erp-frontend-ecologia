@@ -1,43 +1,41 @@
 <h1>Dashboard</h1>
 
 @if (isLoading) {
-<div class="spinner-container">
-  <mat-progress-spinner mode="indeterminate" diameter="50"></mat-progress-spinner>
-</div>
+  <div class="spinner-container">
+    <mat-progress-spinner mode="indeterminate" diameter="50"></mat-progress-spinner>
+  </div>
 } @else {
-<!-- Sección de tarjetas -->
-<div class="cards-container">
-  @for (card of dashboardCards; track card.title) {
-  <mat-card class="dashboard-card" [style.border-left-color]="card.color">
-    <mat-card-header>
-      <div mat-card-avatar class="card-icon-avatar">
-        <mat-icon>{{ card.icon }}</mat-icon>
-      </div>
-      <mat-card-title>{{ card.title }}</mat-card-title>
-      <mat-card-subtitle>Datos Actualizados</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <p class="card-value">{{ card.value }}</p>
-    </mat-card-content>
-  </mat-card>
-  }
-</div>
+  <div class="cards-container">
+    @for (card of dashboardCards; track card.title) {
+      <mat-card class="dashboard-card" [style.border-left-color]="card.color">
+        <mat-card-header>
+          <div mat-card-avatar class="card-icon-avatar">
+            <mat-icon>{{ card.icon }}</mat-icon>
+          </div>
+          <mat-card-title>{{ card.title }}</mat-card-title>
+          <mat-card-subtitle>Datos Actualizados</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="card-value">{{ card.value }}</p>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
 
-<!-- Sección del mapa -->
-<div class="map-section">
-  <h2>Ubicación en Tiempo Real</h2>
-  <app-maps
-    [routes]="vehicleRoutes"
-    [markers]="vehicleMarkers"
-    [center]="mapCenter"
-    [zoom]="mapZoom"
-  ></app-maps>
-</div>
+  <div class="map-section">
+    <h2>Ubicación en Tiempo Real</h2>
+    <app-maps
+      [routes]="vehicleRoutes"
+      [markers]="vehicleMarkers"
+      [center]="mapCenter"
+      [zoom]="mapZoom"
+    ></app-maps>
+  </div>
 
-@if (dashboardCards.length === 0 && !isLoading) {
-<div class="empty-state">
-  <mat-icon>info</mat-icon>
-  <p>No hay datos disponibles para mostrar en el dashboard.</p>
-</div>
-} 
+  @if (dashboardCards.length === 0 && !isLoading) {
+    <div class="empty-state">
+      <mat-icon>info</mat-icon>
+      <p>No hay datos disponibles para mostrar.</p>
+    </div>
+  } 
 }
