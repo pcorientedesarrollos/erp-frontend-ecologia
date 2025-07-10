@@ -2,16 +2,22 @@
 
 /* Contenedor del logo */
 .logo-container {
-  padding: 16px 24px;
-  text-align: center;
+  height: 69px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* Estilos visuales */
+  padding: 0 16px; /* Espacio solo a los lados */
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   margin-bottom: 8px;
 }
 
 .logo-container img {
-  max-width: 150px;
-  height: auto;
-  filter: invert(1) brightness(2);
+  /* La imagen se ajustará al espacio disponible sin deformarse */
+  max-width: 75%;
+  max-height: 90%;
 }
 /* --- ENLACES INACTIVOS --- */
 a[mat-list-item] {
@@ -32,7 +38,7 @@ a[mat-list-item]:hover {
   border-left: none; /* Quitamos el borde izquierdo, el fondo es suficiente */
   color: #ffffff !important; /* Texto blanco puro */
   border-radius: 8px; /* Bordes redondeados para un look moderno */
-  margin: 0 8px; /* Margen para que no toque los bordes */
+  margin: 4 12px; /* Margen para que no toque los bordes */
 }
 .active-link mat-icon {
   color: #ffffff !important;
