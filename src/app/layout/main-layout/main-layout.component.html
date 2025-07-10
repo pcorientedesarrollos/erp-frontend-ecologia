@@ -1,0 +1,24 @@
+<p>main-layout works!</p>
+<mat-sidenav-container class="main-container">
+  <!-- SIDENAV (nuestro componente) -->
+  <!-- #sidenav es una variable de plantilla que nos permite controlarlo desde el HTML -->
+  <mat-sidenav #sidenav mode="side" opened class="sidenav">
+    <app-sidenav></app-sidenav>
+  </mat-sidenav>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <mat-sidenav-content>
+    <!-- Barra de herramientas superior (Toolbar) -->
+    <mat-toolbar color="primary">
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>Mi Aplicación</span>
+    </mat-toolbar>
+
+    <!-- Aquí es donde el router mostrará el DashboardComponent u otras páginas -->
+    <main class="main-content">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

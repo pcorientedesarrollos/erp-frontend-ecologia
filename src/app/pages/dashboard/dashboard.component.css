@@ -1,0 +1,67 @@
+/* Contenedor del spinner para centrarlo */
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+/* Contenedor principal de las tarjetas, usa Flexbox para un layout adaptable */
+.cards-container {
+  display: flex;
+  flex-wrap: wrap; /* Permite que las tarjetas pasen a la siguiente línea en pantallas pequeñas */
+  gap: 20px; /* Espacio entre las tarjetas */
+}
+
+/* Estilo para cada tarjeta individual */
+.dashboard-card {
+  /* flex: 1 1 250px;
+     - flex-grow: 1 (pueden crecer para ocupar espacio)
+     - flex-shrink: 1 (pueden encogerse si es necesario)
+     - flex-basis: 250px (ancho base ideal antes de crecer/encogerse) */
+  flex: 1 1 250px;
+  border-left-width: 5px;
+  border-left-style: solid;
+  /* El color (border-left-color) se aplica dinámicamente desde el HTML */
+}
+
+/* Estilo para el avatar que contiene el ícono en la cabecera de la tarjeta */
+.dashboard-card .card-icon-avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+/* Estilo para el valor numérico grande dentro de la tarjeta */
+.card-value {
+  font-size: 2.5rem; /* 40px */
+  font-weight: bold;
+  text-align: right;
+  margin: 16px 0 0 0; /* Espacio superior y quita el margen inferior */
+  color: #333;
+}
+
+/* Estilo para el mensaje que se muestra cuando no hay datos */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  margin-top: 20px;
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+  color: #757575;
+  background-color: #fafafa;
+}
+
+.empty-state mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 16px;
+}

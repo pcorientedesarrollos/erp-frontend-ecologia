@@ -1,0 +1,50 @@
+/* Contenedor para el logo de la empresa */
+.logo-container {
+  /* Añade espacio interior para que el logo no esté pegado a los bordes */
+  padding: 16px 24px;
+  text-align: center; /* Centra el logo horizontalmente */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12); /* Línea divisoria sutil */
+  margin-bottom: 8px; /* Espacio antes de que empiecen los links */
+}
+
+/* Estilo para la imagen del logo */
+.logo-container img {
+  max-width: 150px; /* Asegura que el logo no sea más ancho que 150px */
+  height: auto; /* Mantiene la proporción de la imagen al cambiar el ancho */
+}
+
+/* Estilo para todos los enlaces de la lista de navegación */
+a[mat-list-item] {
+  color: #333; /* Color de texto estándar para los enlaces */
+  transition: background-color 0.2s ease-in-out; /* Transición suave para el hover */
+}
+
+/* Efecto hover para todos los enlaces, mejora la experiencia de usuario */
+a[mat-list-item]:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+/* --- ESTE ES EL ESTILO MÁS IMPORTANTE --- */
+/* Estilo para el enlace que está actualmente activo (gracias a routerLinkActive) */
+.active-link {
+  /* Color de fondo para destacar el elemento activo */
+  background-color: rgba(
+    63,
+    81,
+    181,
+    0.1
+  ); /* Un tono claro del color primario */
+
+  /* Borde izquierdo que actúa como un indicador visual claro */
+  border-left: 4px solid #3f51b5; /* Usa el color primario de tu tema */
+
+  /* Cambia el color del texto y del ícono al color primario */
+  color: #3f51b5; /* Usa el color primario de tu tema */
+  font-weight: 500; /* Hace la fuente un poco más gruesa */
+}
+
+/* Asegura que el ícono dentro del enlace activo también tome el color primario.
+   Aunque 'color' se hereda, ser explícito puede prevenir problemas. */
+.active-link mat-icon {
+  color: #3f51b5;
+}

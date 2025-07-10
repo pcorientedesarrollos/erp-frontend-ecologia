@@ -1,0 +1,39 @@
+<h1>Dashboard</h1>
+
+<!-- Usamos @if para mostrar un spinner mientras isLoading es true -->
+@if (isLoading) {
+<div class="spinner-container">
+  <mat-progress-spinner
+    mode="indeterminate"
+    diameter="50"
+  ></mat-progress-spinner>
+</div>
+} @else {
+<!-- Contenedor para las tarjetas, usando Flexbox para que sea responsive -->
+<div class="cards-container">
+  <!-- Usamos @for para renderizar una tarjeta por cada item en dashboardCards -->
+  <!-- 'track card.title' es crucial para el rendimiento de la renderización -->
+  @for (card of dashboardCards; track card.title) {
+  <mat-card class="dashboard-card" [style.border-left-color]="card.color">
+    <mat-card-header>
+      <div mat-card-avatar class="card-icon-avatar">
+        <mat-icon>{{ card.icon }}</mat-icon>
+      </div>
+      <mat-card-title>{{ card.title }}</mat-card-title>
+      <mat-card-subtitle>Datos Actualizados</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p class="card-value">{{ card.value }}</p>
+    </mat-card-content>
+  </mat-card>
+  }
+</div>
+
+<!-- Usamos @if con un bloque @empty dentro del @for para un caso más complejo -->
+<!-- O simplemente otro @if para mostrar un mensaje si no hay datos -->
+@if (dashboardCards.length === 0) {
+<div class="empty-state">
+  <mat-icon>info</mat-icon>
+  <p>No hay datos disponibles para mostrar en el dashboard en este momento.</p>
+</div>
+} }

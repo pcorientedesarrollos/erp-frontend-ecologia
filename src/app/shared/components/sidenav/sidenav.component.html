@@ -1,0 +1,16 @@
+<!-- Logo de la empresa -->
+<div class="logo-container">
+  <!-- Asegúrate de tener tu logo en la carpeta src/assets/images -->
+  <img src="assets/images/logo.svg" alt="Logo de la Empresa" />
+</div>
+
+<!-- Lista de Navegación de Material -->
+<mat-nav-list>
+  <!-- Usamos el nuevo @for para iterar sobre los items del menú -->
+  @for (item of menuItems; track item.route) {
+  <a mat-list-item [routerLink]="item.route" routerLinkActive="active-link">
+    <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+    <span matListItemTitle>{{ item.label }}</span>
+  </a>
+  }
+</mat-nav-list>

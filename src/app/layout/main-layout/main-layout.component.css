@@ -1,0 +1,44 @@
+/* El contenedor principal que envuelve todo (sidenav y contenido) */
+.main-container {
+  /* Hace que el layout ocupe el 100% de la altura de la ventana del navegador.
+     Esto es CRUCIAL para que el sidenav y el contenido se estiren verticalmente. */
+  height: 100vh;
+}
+
+/* El componente mat-sidenav al que le asignamos la clase 'sidenav' */
+.sidenav {
+  /* Define el ancho fijo de la barra de navegación lateral */
+  width: 250px;
+
+  /* Añade una línea divisoria a la derecha para separarlo visualmente del contenido */
+  border-right: 1px solid rgba(0, 0, 0, 0.12);
+
+  /* Un fondo sutil para el sidenav */
+  background-color: #fcfcfc;
+}
+
+/* El componente mat-toolbar para la barra de navegación superior */
+mat-toolbar {
+  /* Fija la barra superior para que permanezca visible al hacer scroll.
+     Mejora mucho la usabilidad en páginas con mucho contenido. */
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Asegura que la barra esté por encima de otro contenido */
+}
+
+/* El área principal donde se renderizará tu router-outlet (Dashboard, etc.) */
+.main-content {
+  /* Añade un padding generoso para que el contenido no esté pegado
+     a la barra superior ni a los bordes de la pantalla. */
+  padding: 24px;
+}
+
+/* Estilos para el botón de menú en la barra superior */
+mat-toolbar button {
+  margin-right: 16px; /* Espacio entre el botón y el título de la app */
+}
+
+/* Estilos para el título en la barra superior */
+mat-toolbar span {
+  flex: 1 1 auto; /* Permite que el título ocupe el espacio disponible */
+}
