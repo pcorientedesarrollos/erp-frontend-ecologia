@@ -37,17 +37,17 @@
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef>Acciones</th>
     <td mat-cell *matCellDef="let unit">
-      <button mat-icon-button color="primary" aria-label="Editar unidad">
+      <button mat-icon-button color="primary" aria-label="Editar Unidad">
         <mat-icon>edit</mat-icon>
       </button>
-      <button mat-icon-button color="warn" aria-label="Eliminar unidad">
+      <button mat-icon-button color="warn" aria-label="Eliminar Unidad">
         <mat-icon>delete</mat-icon>
       </button>
     </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <!-- ¡Aquí usamos el nuevo @for! -->
+  <!---->
   @for (row of dataSource; track row.id) {
   <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   }

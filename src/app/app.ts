@@ -1,11 +1,11 @@
 // src/app/app.component.ts
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router'; // Asegúrate que RouterModule está importado
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterModule], // La única importación necesaria es RouterModule
+  imports: [RouterModule],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
