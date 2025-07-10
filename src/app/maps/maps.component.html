@@ -1,0 +1,27 @@
+<!-- Este div es crucial. El CSS le dará la altura necesaria para que el mapa sea visible. -->
+<div class="map-container">
+
+  <!-- Componente principal de Google Maps -->
+  <google-map
+    height="100%"
+    width="100%"
+    [options]="mapOptions"
+    [center]="center"
+    [zoom]="zoom"
+  >
+    <!-- Bucle para dibujar cada una de las RUTAS (líneas) que recibe el componente -->
+    <map-polyline
+      *ngFor="let route of routes"
+      [path]="route.path"
+      [options]="route.options"
+    ></map-polyline>
+
+    <!-- Bucle para dibujar cada uno de los MARCADORES (íconos) que recibe el componente -->
+    <map-marker
+      *ngFor="let marker of markers"
+      [position]="marker.position"
+      [options]="marker.options"
+    ></map-marker>
+
+  </google-map>
+</div>
