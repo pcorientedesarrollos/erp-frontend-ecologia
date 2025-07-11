@@ -1,11 +1,8 @@
 /* src/app/shared/components/sidenav/sidenav.component.css */
 
-/* ======================================= */
-/* ===         ESTILOS DEL LOGO        === */
-/* ======================================= */
-
+/* === ESTILOS DEL LOGO === */
 .logo-container {
-  height: 69px; /* Tu altura personalizada */
+  height: 69px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,49 +12,44 @@
 }
 
 .logo-container img {
-  max-width: 75%; /* Tu tamaño personalizado */
+  max-width: 75%;
   max-height: 80%;
 }
 
-/* ========================================================= */
-/* ===   ESTILOS COMUNES PARA TODOS LOS ITEMS DEL MENÚ   === */
-/* ========================================================= */
-
-/* Esta es la nueva clase que se aplica a los <a> y al <div> para unificar su apariencia */
+/* === ESTILOS COMUNES PARA TODOS LOS ITEMS DEL MENÚ === */
 .menu-item {
-  /* Layout y Alineación: Fuerza a que el <div> se comporte como un enlace <a> */
   display: flex !important;
   align-items: center !important;
-
-  /* Tamaño y Espaciado: Los mismos que aplicabas a tus .active-link */
   height: 48px;
   margin: 4px 12px;
   border-radius: 8px;
-
-  /* Estilos de Texto y Color */
+  padding: 0 16px !important;
   color: rgba(255, 255, 255, 0.7);
-  box-sizing: border-box; /* Buena práctica para el modelo de caja */
+  box-sizing: border-box;
 }
 
-/* Aplica el color del ícono a todos los items por defecto */
 .menu-item mat-icon {
   color: rgba(255, 255, 255, 0.7);
 }
 
-/* =============================================== */
-/* ===   ESTADOS: HOVER, ACTIVO Y EXPANDIDO    === */
-/* =============================================== */
+/* === ¡NUEVAS REGLAS DE ALINEACIÓN FINA! === */
+.menu-item [matListItemIcon] {
+  margin-right: 16px !important;
+}
+.menu-item [matListItemTitle] {
+  margin: 0 !important;
+}
+
+/* === ESTADOS: HOVER, ACTIVO Y EXPANDIDO === */
 
 /* --- EFECTO HOVER --- */
-/* Se aplica a CUALQUIER item del menú */
 .menu-item:hover {
   background-color: rgba(255, 255, 255, 0.08);
 }
 
-/* --- ESTILO PARA EL ENLACE ACTIVO (Dashboard, Usuarios, etc.) --- */
-/* Se aplica solo a los <a> que tienen routerLinkActive */
+/* --- ESTILO PARA EL ENLACE ACTIVO --- */
 .menu-item.active-link {
-  background-color: var(--mat-primary-500); /* Tu color verde brillante */
+  background-color: var(--mat-primary-500);
   color: #ffffff !important;
 }
 .menu-item.active-link mat-icon {
@@ -65,33 +57,16 @@
 }
 
 /* --- ESTILOS ESPECÍFICOS PARA EL ITEM PADRE ("Catálogos") --- */
-
-/* Hace que el cursor cambie a una mano en "Catálogos" */
 .parent-item {
   cursor: pointer;
 }
 
-/* Estilos de la flecha que rota */
 .parent-item .expand-icon {
   margin-left: auto;
   transition: transform 0.2s ease-in-out;
 }
 .parent-item .expand-icon.rotated {
   transform: rotate(180deg);
-}
-
-/* Da feedback visual al item padre cuando está expandido */
-.parent-item.expanded {
-  color: #ffffff; /* Texto más brillante */
-  background-color: rgba(
-    255,
-    255,
-    255,
-    0.05
-  ); /* Un fondo muy sutil para indicar "selección" */
-}
-.parent-item.expanded mat-icon {
-  color: #ffffff;
 }
 
 /* Evita el fondo de foco al hacer clic en el item padre */
