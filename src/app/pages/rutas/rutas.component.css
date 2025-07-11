@@ -1,40 +1,119 @@
-.route-creator-container {
-  padding: 24px;
+/* --- Contenedor Principal y Tema Oscuro --- */
+:host {
+  display: block;
+  background-color: #303030;
+  min-height: 100vh;
+  padding: 2rem;
 }
 
-h1, h2 {
-  color: #333;
+.form-container {
+  max-width: 1400px;
+  margin: auto;
 }
 
-.route-header-form {
+.form-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background-color: #4CAF50; /* Verde, como el color de tu marca */
+  color: white;
+  padding: 16px 24px;
+  border-radius: 8px 8px 0 0;
+}
+
+.form-header h1 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.form-card {
+  background-color: #424242;
+  color: #ffffff;
+  border-radius: 0 0 8px 8px;
+  padding: 16px 24px !important;
+}
+
+.form-section h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #81C784; /* Verde claro para los títulos de sección */
+  margin-top: 24px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #555;
+  padding-bottom: 8px;
+}
+
+.form-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
+}
+
+.entry-detail-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr 1fr;
+  gap: 16px;
+  align-items: center;
   margin-bottom: 24px;
 }
 
-.filter-field {
-  width: 100%;
-  max-width: 400px;
-  margin-bottom: 16px;
+.entry-detail-row .large-field { grid-column: span 2; }
+.entry-detail-row .medium-field { grid-column: span 1; }
+
+.add-button {
+  background-color: #4CAF50 !important;
+  color: white !important;
+  height: 56px;
+  margin-top: -6px; /* Ajuste visual para alinear con los form-fields */
 }
 
+/* --- Estilos para la Tabla --- */
 .table-container {
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
 }
-
-.mat-table {
-  width: 100%;
+.mat-mdc-table {
+  background-color: #383838;
+}
+.mat-mdc-header-cell {
+  background-color: #303030;
+  color: #e0e0e0;
+}
+.mat-mdc-cell {
+  color: #dcdcdc;
+  border-bottom-color: #515151;
 }
 
-.mat-row:hover {
-  background-color: #f5f5f5;
-  cursor: pointer;
-}
-
-.actions-container {
-  margin-top: 24px;
+/* --- Acciones Finales --- */
+.form-actions {
   display: flex;
   justify-content: flex-end;
+  gap: 16px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #555;
 }
+.form-actions [mat-stroked-button] {
+  border-color: #777;
+  color: #bdbdbd;
+}
+.form-actions [mat-raised-button][color="primary"] {
+  background-color: #4CAF50;
+  color: white;
+}
+
+/* --- Estilos Profundos para Material en Tema Oscuro --- */
+:host ::ng-deep .mat-mdc-form-field-flex { background-color: #555 !important; }
+:host ::ng-deep .mat-mdc-select-value,
+:host ::ng-deep .mat-mdc-form-field-label,
+:host ::ng-deep .mat-mdc-select-arrow,
+:host ::ng-deep input.mat-mdc-input-element,
+:host ::ng-deep .mat-mdc-icon-button,
+:host ::ng-deep mat-option {
+  color: #ffffff !important;
+}
+:host ::ng-deep .mat-mdc-select-panel { background: #555; }
