@@ -1,88 +1,109 @@
-<div class="route-creator-container">
-  <h1>Crear Nueva Ruta de Servicio</h1>
+<div class="dark-theme-container">
+  <div class="form-container">
+    <div class="form-header">
+      <mat-icon>route</mat-icon>
+      <h1>Formulario de Creación de Ruta</h1>
+    </div>
 
-  <!-- Encabezado con selección de Operador y Vehículo -->
-  <form [formGroup]="routeForm" class="route-header-form">
-    <mat-form-field appearance="outline">
-      <mat-label>Seleccionar Operador</mat-label>
-      <mat-select formControlName="operator">
-        @for (op of operators; track op.id) {
-          <mat-option [value]="op">{{ op.name }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
+    <mat-card class="form-card">
+      <mat-card-content [formGroup]="routeMasterForm">
 
-    <mat-form-field appearance="outline">
-      <mat-label>Seleccionar Unidad</mat-label>
-      <mat-select formControlName="vehicle">
-        @for (v of vehicles; track v.id) {
-          <mat-option [value]="v">{{ v.id }} - {{ v.name }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
-  </form>
+        <!-- === Sección 1: Datos Generales de la Ruta === -->
+        <div class="form-section">
+          <h2><mat-icon>assignment_ind</mat-icon> 1. Asignación de la Ruta</h2>
+          <div class="form-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>Operador Asignado</mat-label>
+              <mat-select formControlName="operator">
+                @for (item of operators; track item.id) {
+                  <mat-option [value]="item">{{ item.name }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Vehículo Asignado</mat-label>
+              <mat-select formControlName="vehicle">
+                @for (item of vehicles; track item.id) {
+                  <mat-option [value]="item">{{ item.name }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Fecha de la Ruta</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="routeDate">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
 
-  <h2>Seleccionar Clientes para la Ruta</h2>
+        <!-- === Sección 2: Paradas de la Ruta (Clientes y Servicios) === -->
+        <div class="form-section">
+          <h2><mat-icon>pin_drop</mat-icon> 2. Paradas de la Ruta</h2>
+          
+          <!-- Fila de Inputs para agregar paradas -->
+          <div class="entry-detail-row" [formGroup]="stopDetailForm">
+            <mat-form-field appearance="outline" class="large-field">
+              <mat-label>Cliente</mat-label>
+              <mat-select formControlName="client">
+                @for (item of clients; track item.id) {
+                  <mat-option [value]="item">{{ item.name }} - {{item.address}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="medium-field">
+              <mat-label>Tipo de Servicio</mat-label>
+              <mat-select formControlName="serviceType">
+                 @for (item of serviceTypes; track item.id) {
+                  <mat-option [value]="item">{{ item.name }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="large-field">
+              <mat-label>Notas (Opcional)</mat-label>
+              <input matInput formControlName="notes">
+            </mat-form-field>
+            <button mat-flat-button class="add-button" (click)="addStop()" [disabled]="stopDetailForm.invalid">
+              <mat-icon>add_circle</mat-icon> Agregar Parada
+            </button>
+          </div>
 
-  <!-- Filtro para la tabla de clientes -->
-  <mat-form-field appearance="outline" class="filter-field">
-    <mat-label>Buscar cliente...</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Hotel Emporio">
-    <mat-icon matSuffix>search</mat-icon>
-  </mat-form-field>
+          <!-- Tabla con las paradas agregadas -->
+          @if (stops.controls.length > 0) {
+            <div class="table-container mat-elevation-z4">
+              <table mat-table [dataSource]="stops.controls">
+                <!-- Definiciones de columnas -->
+                <ng-container matColumnDef="client"><th mat-header-cell *matHeaderCellDef>Cliente</th><td mat-cell *matCellDef="let element">{{element.value.client.name}}</td></ng-container>
+                <ng-container matColumnDef="address"><th mat-header-cell *matHeaderCellDef>Dirección</th><td mat-cell *matCellDef="let element">{{element.value.address}}</td></ng-container>
+                <ng-container matColumnDef="serviceType"><th mat-header-cell *matHeaderCellDef>Servicio</th><td mat-cell *matCellDef="let element">{{element.value.serviceType.name}}</td></ng-container>
+                <ng-container matColumnDef="notes"><th mat-header-cell *matHeaderCellDef>Notas</th><td mat-cell *matCellDef="let element">{{element.value.notes}}</td></ng-container>
+                <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td mat-cell *matCellDef="let i = index">
+                    <button mat-icon-button color="warn" (click)="removeStop(i)" aria-label="Eliminar parada">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </td>
+                </ng-container>
 
-  <!-- Tabla de Clientes con Selección -->
-  <div class="table-container mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource">
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+            </div>
+          }
+        </div>
 
-      <!-- Columna de Selección (Checkbox) -->
-      <ng-container matColumnDef="select">
-        <th mat-header-cell *matHeaderCellDef>
-          <mat-checkbox (change)="$event ? toggleAllRows() : null"
-                        [checked]="selection.hasValue() && isAllSelected()"
-                        [indeterminate]="selection.hasValue() && !isAllSelected()"
-                        [aria-label]="checkboxLabel()">
-          </mat-checkbox>
-        </th>
-        <td mat-cell *matCellDef="let row">
-          <mat-checkbox (click)="$event.stopPropagation()"
-                        (change)="$event ? selection.toggle(row) : null"
-                        [checked]="selection.isSelected(row)"
-                        [aria-label]="checkboxLabel(row)">
-          </mat-checkbox>
-        </td>
-      </ng-container>
+        <!-- === Acciones Finales === -->
+        <div class="form-actions">
+          <button mat-stroked-button (click)="cancel()">
+            <mat-icon>cancel</mat-icon> Cancelar
+          </button>
+          <button mat-raised-button color="primary" (click)="saveRoute()">
+            <mat-icon>check_circle</mat-icon> Guardar Ruta
+          </button>
+        </div>
 
-      <!-- Otras Columnas -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Cliente </th>
-        <td mat-cell *matCellDef="let row"> {{row.name}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="address">
-        <th mat-header-cell *matHeaderCellDef> Dirección </th>
-        <td mat-cell *matCellDef="let row"> {{row.address}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="city">
-        <th mat-header-cell *matHeaderCellDef> Ciudad </th>
-        <td mat-cell *matCellDef="let row"> {{row.city}} </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
-      </tr>
-    </table>
-
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      </mat-card-content>
+    </mat-card>
   </div>
-  
-  <!-- Botón para Guardar la Ruta -->
-  <div class="actions-container">
-    <button mat-raised-button color="primary" (click)="saveRoute()" [disabled]="selection.selected.length === 0 || routeForm.invalid">
-      <mat-icon>save</mat-icon>
-      Guardar Ruta
-    </button>
-  </div>
-
 </div>

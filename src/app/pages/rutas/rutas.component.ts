@@ -1,161 +1,138 @@
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { SelectionModel } from '@angular/cdk/collections';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 // Importaciones de Angular Material
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
 
 // --- Interfaces para modelar nuestros datos ---
-interface Operator {
-  id: number;
-  name: string;
-}
-
-interface Vehicle {
-  id: string;
-  name: string;
-}
-
-interface Client {
-  id: number;
-  name: string;
-  address: string;
-  city: string;
-}
+interface SelectOption { id: number | string; name: string; }
+interface Client { id: number; name: string; address: string; }
 
 @Component({
-  selector: 'app-rutas',
+  selector: 'app-route-form',
   standalone: true,
   imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatTableModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    MatIconModule,
-    MatPaginatorModule
+    CommonModule, ReactiveFormsModule,
+    MatFormFieldModule, MatInputModule, MatSelectModule, MatDatepickerModule,
+    MatNativeDateModule, MatButtonModule, MatIconModule, MatTableModule, MatCardModule
   ],
   templateUrl: './rutas.component.html',
-  styleUrl: './rutas.component.css'
+  styleUrl: './rutas.component.css' // Usaremos el mismo CSS
 })
 export class RutasComponent implements OnInit {
   private fb = inject(FormBuilder);
 
-  // --- Propiedades del Formulario ---
-  public routeForm: FormGroup;
+  // --- Formularios ---
+  public routeMasterForm: FormGroup;
+  public stopDetailForm: FormGroup;
 
-  // --- Datos de prueba (eventualmente vendrán de una API) ---
-  public operators: Operator[] = [
+  // --- Datos de prueba (reemplazar con llamadas a servicios) ---
+  public operators: SelectOption[] = [
     { id: 1, name: 'Juan Pérez' },
     { id: 2, name: 'Ana García' },
-    { id: 3, name: 'Luis Hernández' },
   ];
-
-  public vehicles: Vehicle[] = [
+  public vehicles: SelectOption[] = [
     { id: 'VAN-01', name: 'Ford Transit' },
     { id: 'VAN-02', name: 'Mercedes Sprinter' },
-    { id: 'CAM-01', name: 'Nissan NP300' },
   ];
-
   public clients: Client[] = [
-    { id: 101, name: 'Hotel Emporio', address: 'Calle 60 #451, Centro', city: 'Mérida' },
-    { id: 102, name: 'Restaurante La Chaya Maya', address: 'Calle 55 #500, Centro', city: 'Mérida' },
-    { id: 103, name: 'Oficinas de Gobierno', address: 'Av. Itzáes #234', city: 'Mérida' },
-    { id: 104, name: 'Plaza Altabrisa', address: 'Calle 7 #451, Fracc. Altabrisa', city: 'Mérida' },
-    { id: 105, name: 'Hospital Star Médica', address: 'Calle 26 #199, Fracc. Altabrisa', city: 'Mérida' },
-    { id: 106, name: 'Super Aki Caucel', address: 'Av. 59 #722, Cd. Caucel', city: 'Mérida' },
-    { id: 107, name: 'Bodega Aurrera Oriente', address: 'Calle 65, Kanasín', city: 'Kanasín' },
+    { id: 101, name: 'Hotel Emporio', address: 'Calle 60 #451, Centro' },
+    { id: 102, name: 'Restaurante La Chaya Maya', address: 'Calle 55 #500' },
+    { id: 103, name: 'Plaza Altabrisa', address: 'Calle 7 #451, Fracc. Altabrisa' },
+  ];
+  public serviceTypes: SelectOption[] = [
+    { id: 'fumigacion', name: 'Fumigación General' },
+    { id: 'desratizacion', name: 'Control de Roedores' },
+    { id: 'revision', name: 'Revisión de Estaciones' },
   ];
 
-  // --- Propiedades de la Tabla ---
-  public displayedColumns: string[] = ['select', 'name', 'address', 'city'];
-  public dataSource = new MatTableDataSource<Client>(this.clients);
-  public selection = new SelectionModel<Client>(true, []); // true para selección múltiple
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  // --- Tabla de Detalles ---
+  public displayedColumns: string[] = ['client', 'address', 'serviceType', 'notes', 'actions'];
 
   constructor() {
-    this.routeForm = this.fb.group({
-      operator: ['', Validators.required],
-      vehicle: ['', Validators.required],
+    // Formulario para los detalles de una parada (cliente)
+    this.stopDetailForm = this.fb.group({
+      client: [null, Validators.required],
+      serviceType: [null, Validators.required],
+      notes: ['']
+    });
+
+    // Formulario principal que contiene la ruta completa
+    this.routeMasterForm = this.fb.group({
+      operator: [null, Validators.required],
+      vehicle: [null, Validators.required],
+      routeDate: [new Date(), Validators.required],
+      stops: this.fb.array([]) // Aquí guardaremos las paradas (clientes) agregadas
     });
   }
 
-  ngOnInit(): void {
-    this.dataSource.paginator = this.paginator;
+  ngOnInit(): void { }
+
+  // --- Getters para facilitar el acceso en el template ---
+  get stops(): FormArray {
+    return this.routeMasterForm.get('stops') as FormArray;
   }
 
-  // --- Lógica de la Tabla de Selección ---
-
-  /** Revisa si todos los clientes visibles están seleccionados. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-
-  /** Selecciona todas las filas si no están todas seleccionadas; de lo contrario, limpia la selección. */
-  toggleAllRows() {
-    if (this.isAllSelected()) {
-      this.selection.clear();
-      return;
-    }
-    this.selection.select(...this.dataSource.data);
-  }
-
-  /** Etiqueta para la casilla de verificación de accesibilidad. */
-  checkboxLabel(row?: Client): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
-    }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
-  }
-
-  // --- Lógica Principal del Componente ---
-
-  /** Filtra los datos de la tabla de clientes. */
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  /** Guarda la ruta creada. */
-  saveRoute() {
-    if (this.routeForm.invalid) {
-      alert('Por favor, seleccione un operador y un vehículo.');
-      return;
-    }
-    if (this.selection.selected.length === 0) {
-      alert('Por favor, seleccione al menos un cliente para la ruta.');
+  // --- Lógica de Negocio ---
+  addStop(): void {
+    if (this.stopDetailForm.invalid) {
+      alert('Por favor, seleccione un cliente y un tipo de servicio.');
       return;
     }
 
-    const newRoute = {
-      operator: this.routeForm.value.operator,
-      vehicle: this.routeForm.value.vehicle,
-      clients: this.selection.selected.map(client => client.id), // Guardamos solo los IDs
-      creationDate: new Date()
+    const clientData = this.stopDetailForm.get('client')?.value;
+
+    const newStopData = {
+      client: clientData,
+      address: clientData.address, // Añadimos la dirección para mostrarla en la tabla
+      serviceType: this.stopDetailForm.get('serviceType')?.value,
+      notes: this.stopDetailForm.get('notes')?.value
     };
 
-    console.log('Ruta Creada:', newRoute);
-    alert(`Ruta para ${newRoute.operator.name} creada con ${newRoute.clients.length} paradas.`);
-    
-    // Aquí es donde llamarías a tu servicio para guardar en la base de datos
-    // this.routeService.create(newRoute).subscribe(...)
+    this.stops.push(this.fb.group(newStopData));
+    this.stopDetailForm.reset();
+  }
 
-    // Opcional: Limpiar el formulario y la selección después de guardar
-    this.routeForm.reset();
-    this.selection.clear();
+  removeStop(index: number): void {
+    this.stops.removeAt(index);
+  }
+
+  saveRoute(): void {
+    if (this.routeMasterForm.invalid || this.stops.length === 0) {
+      alert('Formulario inválido o sin paradas. Por favor, revise los campos.');
+      return;
+    }
+
+    // Mapeamos los datos para guardar solo los IDs, no los objetos completos
+    const finalRouteData = {
+      operatorId: this.routeMasterForm.value.operator.id,
+      vehicleId: this.routeMasterForm.value.vehicle.id,
+      routeDate: this.routeMasterForm.value.routeDate,
+      stops: this.routeMasterForm.value.stops.map((stop: any) => ({
+        clientId: stop.client.id,
+        serviceTypeId: stop.serviceType.id,
+        notes: stop.notes
+      }))
+    };
+
+    console.log('Guardando Ruta:', finalRouteData);
+    alert(`Ruta para ${this.routeMasterForm.value.operator.name} guardada con ${finalRouteData.stops.length} paradas.`);
+    
+    this.cancel();
+  }
+
+  cancel(): void {
+     this.routeMasterForm.reset({ routeDate: new Date() });
+     this.stops.clear();
+     this.stopDetailForm.reset();
   }
 }

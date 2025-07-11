@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { RutasComponent } from './pages/rutas/rutas.component';
+import { MapsComponent } from './maps/maps.component';
 
 export const routes: Routes = [
   {
@@ -11,6 +12,7 @@ export const routes: Routes = [
     children: [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'rutas', component: RutasComponent },
+      { path: 'mapas', component: MapsComponent }, // Asumiendo que RutasComponent maneja mapas
 
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
 
