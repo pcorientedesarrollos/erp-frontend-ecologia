@@ -1,45 +1,100 @@
 /* src/app/shared/components/sidenav/sidenav.component.css */
 
-/* Contenedor del logo */
-.logo-container {
-  height: 69px;
+/* ======================================= */
+/* ===         ESTILOS DEL LOGO        === */
+/* ======================================= */
 
+.logo-container {
+  height: 69px; /* Tu altura personalizada */
   display: flex;
   justify-content: center;
   align-items: center;
-
-  /* Estilos visuales */
-  padding: 0 16px; /* Espacio solo a los lados */
+  padding: 0 16px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   margin-bottom: 8px;
 }
 
 .logo-container img {
-  /* La imagen se ajustará al espacio disponible sin deformarse */
-  max-width: 75%;
-  max-height: 90%;
+  max-width: 75%; /* Tu tamaño personalizado */
+  max-height: 80%;
 }
-/* --- ENLACES INACTIVOS --- */
-a[mat-list-item] {
-  color: rgba(255, 255, 255, 0.7); /* Texto blanco semitransparente */
+
+/* ========================================================= */
+/* ===   ESTILOS COMUNES PARA TODOS LOS ITEMS DEL MENÚ   === */
+/* ========================================================= */
+
+/* Esta es la nueva clase que se aplica a los <a> y al <div> para unificar su apariencia */
+.menu-item {
+  /* Layout y Alineación: Fuerza a que el <div> se comporte como un enlace <a> */
+  display: flex !important;
+  align-items: center !important;
+
+  /* Tamaño y Espaciado: Los mismos que aplicabas a tus .active-link */
+  height: 48px;
+  margin: 4px 12px;
+  border-radius: 8px;
+
+  /* Estilos de Texto y Color */
+  color: rgba(255, 255, 255, 0.7);
+  box-sizing: border-box; /* Buena práctica para el modelo de caja */
 }
-a[mat-list-item] mat-icon {
+
+/* Aplica el color del ícono a todos los items por defecto */
+.menu-item mat-icon {
   color: rgba(255, 255, 255, 0.7);
 }
 
+/* =============================================== */
+/* ===   ESTADOS: HOVER, ACTIVO Y EXPANDIDO    === */
+/* =============================================== */
+
 /* --- EFECTO HOVER --- */
-a[mat-list-item]:hover {
+/* Se aplica a CUALQUIER item del menú */
+.menu-item:hover {
   background-color: rgba(255, 255, 255, 0.08);
 }
 
-/* --- ENLACE ACTIVO --- */
-.active-link {
-  background-color: var(--mat-primary-500) !important; /* Verde brillante */
-  border-left: none; /* Quitamos el borde izquierdo, el fondo es suficiente */
-  color: #ffffff !important; /* Texto blanco puro */
-  border-radius: 8px; /* Bordes redondeados para un look moderno */
-  margin: 4 12px; /* Margen para que no toque los bordes */
-}
-.active-link mat-icon {
+/* --- ESTILO PARA EL ENLACE ACTIVO (Dashboard, Usuarios, etc.) --- */
+/* Se aplica solo a los <a> que tienen routerLinkActive */
+.menu-item.active-link {
+  background-color: var(--mat-primary-500); /* Tu color verde brillante */
   color: #ffffff !important;
+}
+.menu-item.active-link mat-icon {
+  color: #ffffff !important;
+}
+
+/* --- ESTILOS ESPECÍFICOS PARA EL ITEM PADRE ("Catálogos") --- */
+
+/* Hace que el cursor cambie a una mano en "Catálogos" */
+.parent-item {
+  cursor: pointer;
+}
+
+/* Estilos de la flecha que rota */
+.parent-item .expand-icon {
+  margin-left: auto;
+  transition: transform 0.2s ease-in-out;
+}
+.parent-item .expand-icon.rotated {
+  transform: rotate(180deg);
+}
+
+/* Da feedback visual al item padre cuando está expandido */
+.parent-item.expanded {
+  color: #ffffff; /* Texto más brillante */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.05
+  ); /* Un fondo muy sutil para indicar "selección" */
+}
+.parent-item.expanded mat-icon {
+  color: #ffffff;
+}
+
+/* Evita el fondo de foco al hacer clic en el item padre */
+.mat-list-item.parent-item:focus {
+  background-color: transparent !important;
 }
