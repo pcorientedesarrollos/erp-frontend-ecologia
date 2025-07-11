@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core'; // Importa OnInit
+import { Component, OnInit } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
-// La interfaz no cambia
+// La interfaz no cambia, es correcta.
 interface NavItem {
   icon: string;
   label: string;
@@ -20,61 +20,98 @@ interface NavItem {
   styleUrl: './sidenav.component.css',
 })
 export class SidenavComponent implements OnInit {
-  // Implementa OnInit
-  // El array que la plantilla HTML va a renderizar. Empezará vacío.
   public menuItems: NavItem[] = [];
-
-  // Usamos un Set para guardar los items que están expandidos. Es más escalable.
   public expandedItems = new Set<NavItem>();
 
-  // El menú completo. Lo hacemos privado y es nuestra "fuente de la verdad".
+  // =======================================================================
+  // === ESTE ES EL ÚNICO LUGAR QUE NECESITAS MODIFICAR ===
+  // He poblado este array siguiendo tus instrucciones exactas.
+  // =======================================================================
   private readonly _sourceMenuItems: NavItem[] = [
+    // 1. dashboard (tipo 1: normal)
     { icon: 'dashboard', label: 'Dashboard', route: '/dashboard' },
+
+    // 2. rutas (tipo 1: normal)
+    { icon: 'route', label: 'Rutas', route: '/rutas' },
+
+    // 3. servicios (tipo 1: normal)
+    { icon: 'miscellaneous_services', label: 'Servicios', route: '/servicios' },
+
+    // 4. Reportes (tipo 2: anidado)
+    {
+      icon: 'analytics',
+      label: 'Reportes',
+      children: [
+        { icon: 'article', label: 'Reporte A', route: '/reports/a' },
+        { icon: 'assessment', label: 'Reporte B', route: '/reports/b' },
+        { icon: 'bar_chart', label: 'Reporte C', route: '/reports/c' },
+      ],
+    },
+
+    // 5. catalogos (tipo 2: anidado)
     {
       icon: 'collections_bookmark',
       label: 'Catálogos',
       children: [
-        { icon: 'group', label: 'Usuarios', route: '/users' },
-        { icon: 'inventory_2', label: 'Productos', route: '/products' },
+        { icon: 'person', label: 'Clientes', route: '/catalogs/clientes' },
+        {
+          icon: 'local_shipping',
+          label: 'Unidades',
+          route: '/catalogs/unidades',
+        },
+        {
+          icon: 'engineering',
+          label: 'Operadores',
+          route: '/catalogs/operadores',
+        },
+        {
+          icon: 'work',
+          label: 'Tipos de Servicio',
+          route: '/catalogs/tipos-servicio',
+        },
       ],
     },
-    { icon: 'settings', label: 'Configuración', route: '/settings' },
+
+    // 6. configuracion (tipo 2: anidado)
+    {
+      icon: 'settings',
+      label: 'Configuración',
+      children: [
+        {
+          icon: 'manage_accounts',
+          label: 'Usuario',
+          route: '/settings/usuario',
+        },
+        { icon: 'badge', label: 'Perfil', route: '/settings/perfil' },
+      ],
+    },
   ];
 
+  // =======================================================================
+  // === El resto de tu código no necesita ningún cambio. Funciona perfecto. ===
+  // =======================================================================
+
   ngOnInit(): void {
-    // Al iniciar, construimos el menú por primera vez (estará colapsado)
     this.rebuildMenu();
   }
 
-  // La función que se llama al hacer clic en un item expandible
   toggleSubMenu(item: NavItem): void {
-    // Si el item ya estaba en el Set, lo quitamos (colapsar).
-    // Si no estaba, lo añadimos (expandir).
     if (this.expandedItems.has(item)) {
       this.expandedItems.delete(item);
     } else {
       this.expandedItems.add(item);
     }
-    // Después de cualquier cambio, reconstruimos el menú visible
     this.rebuildMenu();
   }
 
-  // La función mágica que construye el array visible
   private rebuildMenu(): void {
     const newMenuItems: NavItem[] = [];
-
     for (const item of this._sourceMenuItems) {
-      // Siempre añadimos el item de primer nivel (ej: Dashboard, Catálogos, etc.)
       newMenuItems.push(item);
-
-      // Si el item tiene hijos Y está en nuestro Set de expandidos...
       if (item.children && this.expandedItems.has(item)) {
-        // ...añadimos todos sus hijos a la lista principal
         newMenuItems.push(...item.children);
       }
     }
-
-    // Reemplazamos el array antiguo con el nuevo
     this.menuItems = newMenuItems;
   }
 }
