@@ -57,10 +57,16 @@ export class DashboardComponent implements OnInit {
   private allFilterOptions: string[] = [
     'Vehículo 01 - Placas ABC-123',
     'Vehículo 02 - Placas XYZ-789',
+    'Vehiculo 03 - Placas YQA-150',
+    'Vehiculo 04 - Placas ZQA-100',
     'Operador: Juan Pérez',
     'Operador: Ana García',
+    'Operador: Emmanuel Chable',
     'Ruta: Centro Histórico',
     'Ruta: Periférico Norte',
+    'Ruta: Kanasin',
+    'Ruta: Vergel',
+    'Ruta: Juan Pablo',
   ];
 
   public filteredOptions$!: Observable<string[]>;
