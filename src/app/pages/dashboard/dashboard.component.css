@@ -54,3 +54,35 @@
   font-weight: 500;
   color: #ffffff;
 }
+.map-header {
+  display: flex;
+  justify-content: space-between; /* Clave para poner uno a cada lado */
+  align-items: center; /* Alinea verticalmente */
+  flex-wrap: wrap; /* Permite que el filtro pase abajo en pantallas muy pequeñas */
+  gap: 16px; /* Espacio entre título y filtro si se ponen en columna */
+  margin-bottom: 16px;
+}
+
+.map-header h2 {
+  margin: 0; /* Quitamos el margen por defecto del h2 para un mejor control */
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.dashboard-filter {
+  width: 350px; /* Ancho del campo de filtro */
+}
+
+/* Opcional: Para que el color del texto y borde del filtro coincida con tu tema oscuro */
+/* Angular Material v15+ maneja esto mejor, pero si no, puedes forzarlo: */
+.dashboard-filter .mat-mdc-form-field-flex {
+  --mdc-filled-text-field-container-color: rgba(255, 255, 255, 0.05);
+}
+.dashboard-filter
+  .mat-mdc-text-field-wrapper
+  .mat-mdc-form-field-input-control {
+  color: #ffffff;
+}
+.dashboard-filter .mat-mdc-form-field-label {
+  color: rgba(255, 255, 255, 0.7);
+}
